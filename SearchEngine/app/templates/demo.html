@@ -1,0 +1,21 @@
+<!-- addition/templates/addition/add_numbers.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Numbers</title>
+</head>
+<body>
+    <h1>Add Two Numbers</h1>
+    <form method="post">
+        {% csrf_token %}
+
+           <input id="num1" name="num1" type="text" placeholder="Whats in you mind!!!" value="{{form.instance.num1}}"/><br /><br /><br /><br />
+           <input id="num2" name="num2" type="text" placeholder="Whats in you mind!!!" value="{{form.instance.num2}}"/><br /><br /><br /><br />
+
+        <button type="submit">Add</button>
+    </form>
+    {% if result %}
+        <h2>Result: {{ result }}</h2>
+    {% endif %}
+</body>
+</html>

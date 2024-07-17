@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <style>
+
+ #from_date {
+ cursor: default;
+    width: 150px;
+    border-style: groove;
+    border-width: 2px;
+    height: 30px;
+        }
+
+ #to_date {
+ cursor: default;
+    width: 150px;
+
+    border-style: groove;
+    border-width: 2px;
+    height: 30px;
+        }
+
+.container {
+cursor: default;
+    margin-top: 150px;
+    margin-left: 450px;
+}
+ .btn {
+  width: 140px;
+  height: 45px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #000;
+  background-color: buttonface;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  }
+
+.btn:hover {
+  background-color: #052433;
+      box-shadow: 0px 15px 20px rgba(5, 36, 51, 0.73);
+  color: #b6e7ff;
+  transform: translateY(7px);
+}
+
+
+
+.LABEL1 {
+    color: #052433;
+    font-size: 40px;
+    font-weight: 800;
+}
+
+
+.LABEL2 {
+    color: #052433;
+    font-size: 30px;
+
+}
+.TABLE{
+    margin-left: 200px;
+
+    height: 350px;
+    width: 1400px;
+    border: 1px solid;
+}
+body {
+  font-family: "Open Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #8184a1;
+  line-height: 1.3;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.lab {
+  float: left;
+  color: #b6e7ff;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 30px
+}
+.topnav {
+  color:#b6e7ff;
+  overflow: hidden;
+  background-color: #052433;
+  font-size:25px;
+
+}
+
+.topnav a {
+  float: right;
+  color: #b6e7ff;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.lab1 {
+    float: right;
+    color: #b6e7ff;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 30px;
+}
+
+.headers {
+    background-color: #b6e7ff;
+    margin-left: 200px;
+    width: 1400px;
+    height: 100px;
+    margin-top: 15px;
+    border: 1px solid;
+}
+
+
+
+#logout {
+margin-top:8px;
+margin-right:8px;
+float:right;
+    color: #b6e7ff;
+    width: 70px;
+    background-color: #052433;
+    height: 45px;
+    border-style: ridge;
+    border-width: 2px;
+    font-weight: 700;
+    border-radius: 18px;
+}
+
+.topnav a:hover {
+  background-color: #b6e7ff;
+  color: #052433;
+}
+        }
+    </style>
+</head>
+<body>
+<div class="topnav">
+<label class="lab">CodeTech</label>
+
+    {% if request.session.name %}
+<label class="lab1">{{request.session.name}}</label>
+    {% else %}
+    <label class="lab1">Test_session</label>
+     {% endif %}
+
+
+</div>
+ <form method="post" action="{% url 'app:logout' %}">
+        {% csrf_token %}
+  <input id="logout" name="logout" type='submit' value="logout" />
+    </form>
+<br>
+<br>
+<br>
+ <form method="post" action="{% url 'app:admin-page' %}">
+
+     <div class="container">
+            {% csrf_token %}
+     <input id="from_date" name="from_date" type="date" placeholder="Whats in you mind!!!" value="{{form.instance.from_date}}"/>&nbsp;&nbsp;
+     <input id="to_date" name="to_date" type="date" placeholder="Whats in you mind!!!" value="{{form.instance.to_date}}"/>&nbsp;&nbsp;
+            &nbsp;&nbsp;
+            <input id="Button1" name="Button" type='submit'  value="Search" class="btn">
+     </div>
+ </form>
+<table class="headers">
+        <tr style="height=150px;">
+        <td class="headers"> <center><label class="LABEL2">Total</label> <br><label class="LABEL1">{% if Total %}
+      {{Total}}
+
+            {% endif %} </label> </center> </td>
+        <td class="headers"><center><label class="LABEL2">Total Customer</label> <br><label class="LABEL1">{% if customer %}
+      {{customer}}
+
+            {% endif %} </label> </center></td>
+            <td class="headers"><center><label class="LABEL2">Frequent Category</label> <br><label class="LABEL1">{% if category %}
+      {{category}}
+
+            {% endif %} </label> </center> </td>
+    </tr>
+</table>
+<table class="TABLE">
+
+    <tr class="TABLE">
+        <td class="TABLE">{{ chart|safe }}</td>
+        <td class="TABLE"></td>
+    </tr>
+
+        <tr class="TABLE">
+        <td class="TABLE">{{ cust_val|safe }}</td>
+        <td class="TABLE">{{ Trend|safe }}</td>
+    </tr>
+        <tr class="TABLE">
+        <td class="TABLE">{{ search_trend|safe }}</td>
+        <td class="TABLE">{{ sunburst|safe }}</td>
+    </tr>
+
+
+</table>
+
+
+
+</body>
+</html>
